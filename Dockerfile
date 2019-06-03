@@ -15,11 +15,11 @@
 #    --name celestia \
 #    "${DOCKER_REPO_PREFIX}/celestia" "$@"
 
-FROM alpine:edge AS builder
+FROM alpine AS builder
 
 ENV CELESTIA_VERSION master
 
-RUN apk upgrade && apk --no-cache add --virtual .build-dependencies \
+RUN apk update && apk --no-cache add --virtual .build-dependencies \
     cmake \
     make \
     g++ \
@@ -49,12 +49,12 @@ RUN apk upgrade && apk --no-cache add --virtual .build-dependencies \
     && apk del .build-dependencies \
     && rm -rf /var/cache/*
 
-FROM alpine:edge
+FROM alpine
 
 COPY --from=builder /usr/local/share/celestia /usr/local/share/celestia
 COPY --from=builder /usr/local/bin /usr/local/bin
 
-RUN apk upgrade && apk --no-cache add \
+RUN apk update && apk --no-cache add \
     glew-dev \
     jpeg \
     libpng \
