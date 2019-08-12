@@ -15,9 +15,12 @@
 #    --name celestia \
 #    "${DOCKER_REPO_PREFIX}/celestia" "$@"
 
+ARG CELESTIA_VERSION="master"
+
 FROM alpine AS builder
 
-ENV CELESTIA_VERSION master
+ARG CELESTIA_VERSION
+ENV CELESTIA_VERSION "${CELESTIA_VERSION}"
 
 RUN apk update && apk --no-cache add --virtual .build-dependencies \
     cmake \
@@ -51,6 +54,8 @@ RUN apk update && apk --no-cache add --virtual .build-dependencies \
 
 FROM alpine
 
+ARG CELESTIA_VERSION
+
 COPY --from=builder /usr/local/share/celestia /usr/local/share/celestia
 COPY --from=builder /usr/local/bin /usr/local/bin
 
@@ -75,3 +80,10 @@ RUN apk update && apk --no-cache add \
 USER celestia
 
 ENTRYPOINT ["celestia-qt"]
+
+LABEL org.opencontainers.image.title="Celestia" \
+    org.opencontainers.image.description="Celestia in Docker" \ 
+    org.opencontainers.image.url="https://github.com/westonsteimel/docker-celestia" \ 
+    org.opencontainers.image.source="https://github.com/westonsteimel/docker-celestia" \
+    org.opencontainers.image.version="${CELESTIA_VERSION}"
+
