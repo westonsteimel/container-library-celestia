@@ -13,13 +13,7 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       with:
-        args: build -t "${DOCKER_USERNAME}/celestia:latest" .
-    - name: Docker Tag
-      uses: actions/docker/cli@master
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      with:
-        entrypoint: ./tag.sh
+        args: build -t "${DOCKER_USERNAME}/celestia:latest" -t "${DOCKER_USERNAME}/celestia:master" .
     - name: Login DockerHub
       uses: actions/docker/login@master
       env:
