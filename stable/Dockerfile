@@ -15,7 +15,7 @@
 #    --name celestia \
 #    "${DOCKER_REPO_PREFIX}/celestia" "$@"
 
-ARG CELESTIA_VERSION="master"
+ARG CELESTIA_VERSION="1.6.1"
 
 FROM alpine AS builder
 
@@ -85,5 +85,6 @@ LABEL org.opencontainers.image.title="Celestia" \
     org.opencontainers.image.description="Celestia in Docker" \ 
     org.opencontainers.image.url="https://github.com/westonsteimel/docker-celestia" \ 
     org.opencontainers.image.source="https://github.com/westonsteimel/docker-celestia" \
-    org.opencontainers.image.version="${CELESTIA_VERSION}"
+    org.opencontainers.image.version="${CELESTIA_VERSION}" \
+    version="${CELESTIA_VERSION}"
 
